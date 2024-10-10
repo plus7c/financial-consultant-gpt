@@ -5,7 +5,7 @@ WORKDIR /app
 
 RUN npm install -g pnpm --registry=http://172.22.121.51:8081/repository/npm-public
 COPY package*.json /app/ 
-RUN pnpm install --frozen-lockfile --registry=http://172.22.121.51:8081/repository/npm-public
+RUN pnpm install --no-frozen-lockfile --registry=http://172.22.121.51:8081/repository/npm-public
 
 COPY ./ /app/
 RUN pnpm run lint
