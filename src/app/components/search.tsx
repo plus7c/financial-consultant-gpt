@@ -14,8 +14,8 @@ export const Search: FC = () => {
       </div>
       <div className="flex flex-col space-x-0 space-y-2 px-6 py-3 text-[12px]/[18px] md:flex-row md:space-x-2 md:space-y-0">
         {' '}
-        <PresetQuery query="What is stablecoin?" />
-        <PresetQuery query="How to farm crypto airdrops?" />
+        <PresetQuery query="列出Transformer构架的优劣?" />
+        <PresetQuery query="暗物质和暗能量对宇宙学理论的挑战" />
       </div>
     </div>
   )

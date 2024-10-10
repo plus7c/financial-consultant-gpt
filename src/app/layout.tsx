@@ -14,7 +14,7 @@ import Header from './components/header'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Heurist Search',
+  title: '智能咨询助手',
 
   description:
     'AI-based search engine powered by Heurist LLM API\n Deployed on Lepton',
