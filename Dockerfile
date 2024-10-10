@@ -17,10 +17,10 @@ FROM 172.22.121.50/library/node:20-alpine as production-stage
 
 WORKDIR /app
 
-COPY --from=builder /app/.next ./app/.next
-COPY --from=builder /app/node_modules ./app/node_modules
-COPY --from=builder /app/package*.json ./app
-COPY --from=builder /app/public ./app/public
+COPY --from=build-stage /app/.next ./app/.next
+COPY --from=build-stage /app/node_modules ./app/node_modules
+COPY --from=build-stage /app/package*.json ./app
+COPY --from=build-stage /app/public ./app/public
 
 EXPOSE 3000/tcp
 

@@ -25,7 +25,7 @@ build:
           --skip-tls-verify
           --dockerfile "Dockerfile"
           --context ./
-          --destination 172.22.121.50/reportgen/reportgen-frontend:$CI_PIPELINE_IID
+          --destination 172.22.121.50/reportgen/reportgen-frontend-react:$CI_PIPELINE_IID
 
 deploy:
     image: 172.22.121.50/dockerio/bitnami/kubectl:1.23
