@@ -1,5 +1,5 @@
-# FROM node:18-alpine AS build-stage
-FROM 172.22.121.50/library/node:18-alpine as build-stage
+# FROM node:20-alpine AS build-stage
+FROM 172.22.121.50/library/node:20-alpine as build-stage
 
 WORKDIR /app
 
@@ -12,8 +12,8 @@ RUN pnpm run lint
 RUN pnpm run build
 
 
-# FROM node:18-alpine AS production-stage
-FROM 172.22.121.50/library/node:18-alpine as production-stage
+# FROM node:20-alpine AS production-stage
+FROM 172.22.121.50/library/node:20-alpine as production-stage
 
 WORKDIR /app
 
