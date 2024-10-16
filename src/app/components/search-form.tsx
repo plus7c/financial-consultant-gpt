@@ -2,22 +2,19 @@
 
 import { Search as SearchIcon } from 'lucide-react'
 import React, { FC, useState } from 'react'
-import { nanoid } from 'nanoid'
 import { useRouter } from 'next/navigation'
 
-import { getSearchUrl } from '@/app/utils/get-search-url'
-
 interface SearchFormProps {
-  hideBorder?: boolean
-  query?: string
+  onValueChange?: (value: string) => void
+  isHome?: boolean
 }
 export const SearchForm: FC<SearchFormProps> = ({
-  hideBorder = false,
-  query,
+  onValueChange,
+  isHome = false
 }) => {
-  const router = useRouter()
-  const [value, setValue] = useState(query || '')
+  const [value, setValue] = useState('')
   const [isFocused, setIsFocused] = useState(true)
+  const router = useRouter()
 
   return (
     <form
@@ -25,31 +22,45 @@ export const SearchForm: FC<SearchFormProps> = ({
         e.preventDefault()
         if (value) {
           setValue('')
-          router.push(getSearchUrl(encodeURIComponent(value), nanoid()))
+          if (isHome) {
+            router.push(`/search?query=${value}`)
+          } else {
+            onValueChange?.(value)
+          }
         }
       }}
       className="relative flex w-full items-center rounded-2xl bg-white"
     >
-      <div className="relative w-full">
-        <input
+      <div className="relative w-full mr-3">
+        <textarea
           id="search-bar"
           value={value}
           onChange={(e) => setValue(e.target.value)}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              e.preventDefault()
-              router.push(getSearchUrl(encodeURIComponent(value), nanoid()))
+            const { code, key, shiftKey } = e
+            if (code === 'Enter') {
+              if (key !== 'Process' && !shiftKey) { 
+                e.preventDefault()
+                if (isHome) {
+                  router.push(`/search?query=${value}`)
+                } else {
+                  onValueChange?.(value)
+                }
+              }
             }
           }}
           autoFocus
           placeholder="请输入，Enter键发送，Shift+Enter键换行"
-          maxLength={100}
-          className={`mx-6 w-5/6 flex-1 ${hideBorder ? '' : 'border-b'} overflow-hidden text-ellipsis whitespace-nowrap bg-[transparent] py-4 pr-10 text-2xl outline-none focus:border-[#1d1d1b]`}
+          maxLength={500}
+          rows={2}
+          wrap="hard"
+          className={` resize-none mx-6 w-5/6 flex-1 overflow-auto bg-[transparent] py-4 pr-10 text-1xl outline-none focus:border-[#1d1d1b]`}
         />
         {value && (
           <button
+            type="reset"
             onClick={() => setValue('')}
             className="absolute bottom-0 right-14 top-0 m-4 m-auto"
           >
@@ -72,11 +83,10 @@ export const SearchForm: FC<SearchFormProps> = ({
       </div>
       <button
         type="submit"
-        className={`absolute bottom-0 right-3 top-0 m-auto flex h-10 w-10 items-center justify-center rounded-full text-white transition-colors ${
-          isFocused
-            ? 'bg-black hover:bg-gray-800'
-            : 'bg-[#c9c9c6] hover:bg-gray-500'
-        }`}
+        className={`absolute bottom-0 right-3 top-0 m-auto flex h-10 w-10 items-center justify-center rounded-full text-white transition-colors ${isFocused
+          ? 'bg-black hover:bg-gray-800'
+          : 'bg-[#c9c9c6] hover:bg-gray-500'
+          }`}
       >
         <SearchIcon size={16} />
       </button>
