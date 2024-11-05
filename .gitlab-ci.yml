@@ -37,9 +37,12 @@ build:
     - /kaniko/warmer
       --skip-tls-verify-pull
       --dockerfile "Dockerfile"
+      --cache-dir=$CI_PROJECT_DIR/cache
       --skip-tls-verify-registry 172.22.121.50
     - /kaniko/executor
+      --cache=true
       --skip-tls-verify
+      --cache-dir=$CI_PROJECT_DIR/cache
       --dockerfile "Dockerfile"
       --context ./
       --destination 172.22.121.50/reportgen/reportgen-frontend-react:$CI_PIPELINE_IID
