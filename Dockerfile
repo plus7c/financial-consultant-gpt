@@ -10,7 +10,8 @@ WORKDIR /app
 
 COPY package.json pnpm-lock.yaml* .npmrc* ./
 
-RUN corepack enable pnpm && pnpm i --frozen-lockfile --registry=http://172.22.121.51:8081/repository/npm-public
+RUN npm config set registry http://172.22.121.51:8081/repository/npm-public/ && npm install -g pnpm
+RUN pnpm i --frozen-lockfile --registry=http://172.22.121.51:8081/repository/npm-public
 
 # Rebuild the source code only when needed
 FROM base AS builder
@@ -18,7 +19,8 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-RUN corepack enable pnpm && pnpm run build
+RUN npm config set registry http://172.22.121.51:8081/repository/npm-public/ && npm install -g pnpm
+RUN pnpm run build
 
 
 FROM base AS runner

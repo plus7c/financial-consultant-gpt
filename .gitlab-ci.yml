@@ -13,7 +13,8 @@ lint:
   tags:
     - 'k8s_runner_report'
   script:
-    - corepack enable pnpm
+    - npm config set registry http://172.22.121.51:8081/repository/npm-public/
+    - npm install -g pnpm
     - pnpm i --frozen-lockfile --registry=http://172.22.121.51:8081/repository/npm-public
     - pnpm run prettier-check
     - pnpm run lint
