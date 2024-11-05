@@ -1,4 +1,3 @@
-import { BookOpenText } from 'lucide-react'
 import { FC } from 'react'
 import Markdown from 'react-markdown'
 

@@ -1,4 +1,3 @@
-import { BookText } from 'lucide-react'
 import { FC } from 'react'
 
 import { Skeleton } from '@/app/components/skeleton'
