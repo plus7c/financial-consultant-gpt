@@ -1,4 +1,3 @@
-import { MessageSquareQuote } from 'lucide-react'
 import React, { FC } from 'react'
 
 import { PresetQuery } from '@/app/components/preset-query'

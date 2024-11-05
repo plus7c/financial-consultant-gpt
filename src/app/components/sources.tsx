@@ -1,4 +1,3 @@
-import { BookText } from 'lucide-react'
 import { FC } from 'react'
 
 import { Skeleton } from '@/app/components/skeleton'
@@ -45,16 +44,16 @@ const SourceItem: FC<{ source: Source; index: number }> = ({
             <path
               d="M11 5L4 12"
               stroke="#A7A6A1"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
             <path
               d="M5 4L11.95 4.049L12 11"
               stroke="#A7A6A1"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
         </div>
@@ -68,7 +67,7 @@ export const Sources: FC<{ sources: Source[] }> = ({ sources }) => {
     <Wrapper
       title={<>Sources · {sources.length}</>}
       content={
-        <div className="grid grid-cols-2 gap-2 ">
+        <div className="grid grid-cols-2 gap-2">
           {sources.length > 0 ? (
             sources.map((item, index) => (
               <SourceItem

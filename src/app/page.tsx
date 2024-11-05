@@ -2,15 +2,13 @@
 
 import React from 'react'
 
-import { Logo } from '@/app/components/logo'
-import { Search } from '@/app/components/search'
+import { SearchHome } from './components/searchHome'
 
 export default function Home() {
   return (
-    <div className=" inset-0 flex  min-h-screen items-center justify-center">
-      <div className="relative -mt-24 flex flex-col gap-6 px-4">
-        <Logo></Logo>
-        <Search></Search>
+    <div className="relative flex min-h-screen flex-1 items-center justify-center max-md:mt-64 max-md:items-start">
+      <div className="absolute my-auto md:w-2/5">
+        <SearchHome></SearchHome>
       </div>
     </div>
   )

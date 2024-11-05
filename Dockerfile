@@ -1,27 +1,56 @@
-# FROM node:20-alpine AS build-stage
-FROM 172.22.121.50/library/node:20-alpine as build-stage
+# FROM node:22-alpine AS base
+FROM 172.22.121.50/dockerhub/library/node:22-alpine AS base
 
+
+
+FROM base AS deps
+# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-RUN npm install -g pnpm --registry=http://172.22.121.51:8081/repository/npm-public
-COPY package*.json /app/ 
-RUN pnpm install --registry=http://172.22.121.51:8081/repository/npm-public
+COPY package.json pnpm-lock.yaml* .npmrc* ./
 
-COPY ./ /app/
-RUN pnpm run lint
+RUN npm config set registry http://172.22.121.51:8081/repository/npm-public/ && npm install -g pnpm
+RUN pnpm i --frozen-lockfile --registry=http://172.22.121.51:8081/repository/npm-public
+
+# Rebuild the source code only when needed
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+
+RUN npm config set registry http://172.22.121.51:8081/repository/npm-public/ && npm install -g pnpm
 RUN pnpm run build
 
 
-# FROM node:20-alpine AS production-stage
-FROM 172.22.121.50/library/node:20-alpine as production-stage
-
+FROM base AS runner
 WORKDIR /app
 
-COPY --from=build-stage /app/.next ./app/.next
-COPY --from=build-stage /app/node_modules ./app/node_modules
-COPY --from=build-stage /app/package*.json ./app
-COPY --from=build-stage /app/public ./app/public
+ENV NODE_ENV=production
+# Uncomment the following line in case you want to disable telemetry during runtime.
+# ENV NEXT_TELEMETRY_DISABLED=1
 
-EXPOSE 3000/tcp
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
 
-CMD ["npm","run","start"]
+COPY --from=builder /app/public ./public
+
+# Set the correct permission for prerender cache
+RUN mkdir .next
+RUN chown nextjs:nodejs .next
+
+# Automatically leverage output traces to reduce image size
+# https://nextjs.org/docs/advanced-features/output-file-tracing
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
+
+EXPOSE 3000
+
+ENV PORT=3000
+
+# server.js is created by next build from the standalone output
+# https://nextjs.org/docs/pages/api-reference/next-config-js/output
+ENV HOSTNAME="0.0.0.0"
+CMD ["node", "server.js"]

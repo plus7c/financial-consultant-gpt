@@ -1,14 +1,15 @@
-import { Mails } from "lucide-react";
-import { FC } from "react";
-import Link from "next/link";
+import { Mails } from 'lucide-react'
+import { FC } from 'react'
+import Link from 'next/link'
+
 export const Footer: FC = () => {
   return (
-    <div className="text-center flex flex-col items-center text-xs text-zinc-700 gap-1">
+    <div className="flex flex-col items-center gap-1 text-center text-xs text-zinc-700">
       <div className="text-zinc-400">Heurist 🤝 Lepton</div>
-      <div className="flex gap-2 justify-center">
+      <div className="flex justify-center gap-2">
         <div>
           <Link
-            className="text-blue-500 font-medium inline-flex gap-1 items-center flex-nowrap text-nowrap"
+            className="inline-flex flex-nowrap items-center gap-1 text-nowrap font-medium text-blue-500"
             href="mailto:team@heurist.xyz"
           >
             <Mails size={8} />
@@ -17,9 +18,9 @@ export const Footer: FC = () => {
         </div>
         <div>If you need a low-cost and performant LLM API!</div>
       </div>
-      <div className="flex items-center justify-center flex-wrap gap-x-4 gap-y-2 mt-2 text-zinc-400">
+      <div className="mt-2 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-zinc-400">
         <Link
-          className="flex gap-2 items-center hover:text-zinc-950"
+          className="flex items-center gap-2 hover:text-zinc-950"
           href="https://heurist.xyz"
         >
           <svg
@@ -29,10 +30,10 @@ export const Footer: FC = () => {
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            className="lucide lucide-external-link "
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="lucide lucide-external-link"
           >
             <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
             <polyline points="15 3 21 3 21 9"></polyline>
@@ -48,7 +49,7 @@ export const Footer: FC = () => {
         </a> */}
 
         <Link
-          className="flex gap-2 items-center hover:text-zinc-950"
+          className="flex items-center gap-2 hover:text-zinc-950"
           href="https://github.com/heurist-network/gpt-search-web"
           target="_blank"
         >
@@ -59,9 +60,9 @@ export const Footer: FC = () => {
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             className="lucide lucide-github"
           >
             <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
@@ -70,7 +71,7 @@ export const Footer: FC = () => {
           Github
         </Link>
         <Link
-          className="flex gap-2 items-center hover:text-zinc-950"
+          className="flex items-center gap-2 hover:text-zinc-950"
           href="https://twitter.com/heurist_ai"
           target="_blank"
         >
@@ -81,9 +82,9 @@ export const Footer: FC = () => {
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             className="lucide lucide-twitter"
           >
             <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
@@ -95,5 +96,5 @@ export const Footer: FC = () => {
         </a> */}
       </div>
     </div>
-  );
-};
+  )
+}

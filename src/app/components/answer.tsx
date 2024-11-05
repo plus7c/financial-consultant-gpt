@@ -1,4 +1,3 @@
-import { BookOpenText } from 'lucide-react'
 import { FC } from 'react'
 import Markdown from 'react-markdown'
 
@@ -66,7 +65,7 @@ export const Answer: FC<{ markdown: string; sources: Source[] }> = ({
                           <hr className="my-3 w-full border-t border-gray-200" />
                           <div className="flex items-center text-[14px]/[18px]">
                             <div className="flex-1 overflow-hidden">
-                              <div className=" text-blue-500">
+                              <div className="text-blue-500">
                                 <a
                                   title={source.name}
                                   href={source.url}
@@ -92,16 +91,16 @@ export const Answer: FC<{ markdown: string; sources: Source[] }> = ({
                                       <path
                                         d="M11 5L4 12"
                                         stroke="#A7A6A1"
-                                        stroke-width="1.5"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
                                       />
                                       <path
                                         d="M5 4L11.95 4.049L12 11"
                                         stroke="#A7A6A1"
-                                        stroke-width="1.5"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
                                       />
                                     </svg>
                                   </div>

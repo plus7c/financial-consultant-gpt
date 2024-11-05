@@ -6,7 +6,7 @@ export const Wrapper: FC<{
 }> = ({ title, content }) => {
   return (
     <div className="flex w-full flex-col gap-4 text-base">
-      <div className="flex gap-2 ">{title}</div>
+      <div className="flex gap-2">{title}</div>
       {content}
     </div>
   )
