@@ -67,7 +67,7 @@ export const Sources: FC<{ sources: Source[] }> = ({ sources }) => {
     <Wrapper
       title={<>Sources · {sources.length}</>}
       content={
-        <div className="grid grid-cols-2 gap-2 ">
+        <div className="grid grid-cols-2 gap-2">
           {sources.length > 0 ? (
             sources.map((item, index) => (
               <SourceItem

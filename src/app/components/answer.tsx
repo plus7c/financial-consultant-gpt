@@ -65,7 +65,7 @@ export const Answer: FC<{ markdown: string; sources: Source[] }> = ({
                           <hr className="my-3 w-full border-t border-gray-200" />
                           <div className="flex items-center text-[14px]/[18px]">
                             <div className="flex-1 overflow-hidden">
-                              <div className=" text-blue-500">
+                              <div className="text-blue-500">
                                 <a
                                   title={source.name}
                                   href={source.url}

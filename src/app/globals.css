@@ -40,7 +40,6 @@ body::before {
 }
 
 @keyframes breatheBlur {
-
   0%,
   100% {
     filter: blur(8px);

@@ -1,7 +1,7 @@
 'use client'
 
-import { Search as SearchIcon, ArrowDown } from 'lucide-react'
-import React, { FC, useState, useEffect } from 'react'
+import { ArrowDown, Search as SearchIcon } from 'lucide-react'
+import React, { FC, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 interface SearchFormProps {
@@ -14,12 +14,11 @@ export const SearchForm: FC<SearchFormProps> = ({
   onValueChange,
   onIsCommitedChange,
   isCommited = true,
-  isHome = false
+  isHome = false,
 }) => {
   const [value, setValue] = useState('')
   const [isFocused, setIsFocused] = useState(true)
   const router = useRouter()
-
 
   return (
     <>
@@ -36,12 +35,7 @@ export const SearchForm: FC<SearchFormProps> = ({
             }
           }
         }}
-        className={`relative flex w-full items-center bg-white  rounded-2xl
-      ${isFocused
-            ? 'border-slate-600'
-            : ''
-          } 
-      `}
+        className={`relative flex w-full items-center rounded-2xl bg-white ${isFocused ? 'border-slate-600' : ''} `}
       >
         <div className="relative w-full">
           <textarea
@@ -70,19 +64,20 @@ export const SearchForm: FC<SearchFormProps> = ({
             maxLength={500}
             rows={1}
             wrap="hard"
-            className={`resize-none mx-6 w-5/6 flex-1 overflow-auto bg-[transparent] py-4 pr-10 outline-none  max-md:text-nowrap ${isHome ? 'text-1xl' : 'text-sm'}`}
+            className={`mx-6 w-5/6 flex-1 resize-none overflow-auto bg-[transparent] py-4 pr-10 outline-none max-md:text-nowrap ${isHome ? 'text-1xl' : 'text-sm'}`}
           />
         </div>
         <button
           type="submit"
-          className={`absolute bottom-0 right-3 top-0 m-auto flex h-10 w-10 items-center justify-center rounded-full text-white transition-colors ${isFocused
-            ? 'bg-black hover:bg-gray-800'
-            : 'bg-[#c9c9c6] hover:bg-gray-500'
-            }`}
+          className={`absolute bottom-0 right-3 top-0 m-auto flex h-10 w-10 items-center justify-center rounded-full text-white transition-colors ${
+            isFocused
+              ? 'bg-black hover:bg-gray-800'
+              : 'bg-[#c9c9c6] hover:bg-gray-500'
+          }`}
         >
           <SearchIcon size={16} />
         </button>
-      </form></>
-
+      </form>
+    </>
   )
 }
