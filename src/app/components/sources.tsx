@@ -45,16 +45,16 @@ const SourceItem: FC<{ source: Source; index: number }> = ({
             <path
               d="M11 5L4 12"
               stroke="#A7A6A1"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
             <path
               d="M5 4L11.95 4.049L12 11"
               stroke="#A7A6A1"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
         </div>

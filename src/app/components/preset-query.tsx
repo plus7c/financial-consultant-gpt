@@ -11,7 +11,7 @@ export const PresetQuery: FC<{ query: string }> = ({ query }) => {
         pathname: '/search',
         query: { query: query },
       }}
-      className="flex h-[26px] items-center rounded-full border border-[#c9c9c6] bg-white px-4 py-2"
+      className="flex h-[26px] items-center rounded-full border border-[#c9c9c6] bg-white px-4 py-2 text-nowrap"
     >
       {query}
     </Link>
