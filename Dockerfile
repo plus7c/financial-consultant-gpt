@@ -1,5 +1,5 @@
 # FROM node:22-alpine AS base
-FROM 172.22.121.50/library/node:22-alpine AS base
+FROM 172.22.121.50/dockerhub/library/node:22-alpine AS base
 
 
 

@@ -1,6 +1,22 @@
 stages:
+  - lint
   - build
   - deploy
+
+lint:
+  image: 172.22.121.50/dockerhub/library/node:22-alpine
+  stage: lint
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}-node
+    paths:
+      - node_modules/
+  tags:
+    - 'k8s_runner_report'
+  script:
+    - corepack enable pnpm
+    - pnpm i --frozen-lockfile --registry=http://172.22.121.51:8081/repository/npm-public
+    - pnpm run prettier-check
+    - pnpm run lint
 
 build:
   image:

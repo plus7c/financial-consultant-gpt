@@ -12,7 +12,7 @@ import { useSelectedTextStore } from '@/lib/store'
 // 定义搜索页面组件
 
 function Search() {
- const searchParams = useSearchParams()
+  const searchParams = useSearchParams()
   const q = searchParams.get('query') || ''
   const [queryHistory, setQueryHistory] = useState([q])
   const [isCommited, setIsCommited] = useState<boolean>(false)
