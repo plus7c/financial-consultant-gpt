@@ -124,6 +124,7 @@ export const Result: FC<{
   }, [reasons, advices, references, summary])
 
   /* 请求数据 */
+  /* 请求数据 */
   useEffect(() => {
     const eventSource = new EventSource(`/api/proxy?query=${query}`);
     // const eventSource = new EventSource(
