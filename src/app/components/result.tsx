@@ -49,7 +49,7 @@ export const Result: FC<{ query: string, onIsCommitedChange: any, onTextSelect: 
 
   const [scope, animate] = useAnimate();
 
-/* loading 动画效果 */
+  /* loading 动画效果 */
   useEffect(() => {
     if (!scope.current || !frameRef.current) return; // 确保引用已经存在
     const containerWidth = frameRef.current?.offsetWidth;
@@ -88,12 +88,12 @@ export const Result: FC<{ query: string, onIsCommitedChange: any, onTextSelect: 
   const handleAddText = () => {
     if (selectedText) {
       onTextSelect(selectedText); // 将选中的文本传递给父组件
-      setSelectedText(null); 
-      setButtonPosition(null); 
+      setSelectedText(null);
+      setButtonPosition(null);
     }
   };
 
-  const handleClickOutside = (event: any) => {
+  const handleClickOutside = (event: MouseEvent) => {
     if (!selectedText) {
       setButtonPosition(null);
     }
@@ -115,11 +115,12 @@ export const Result: FC<{ query: string, onIsCommitedChange: any, onTextSelect: 
     }
   }, [reasons, advices, references, summary]);
 
-/* 请求数据 */
+  /* 请求数据 */
   useEffect(() => {
-    /* 服务器 */
-    console.log("API URL:", process.env.API_URL);
-    const eventSource = new EventSource(`${process.env.NEXT_PUBLIC_API_URL}/workflow/query?keyword=${query}`);
+    const eventSource = new EventSource(`/api/proxy?query=${query}`);
+    // const eventSource = new EventSource(
+    //   `${process.env.NEXT_PUBLIC_API_URL}/workflow/query?keyword=${query}`,
+    // )
     /* 本地 */
     // const eventSource = new EventSource(`http://192.168.229.24:8080/api/v1/workflow/query?keyword=${query}`);
     eventSource.onmessage = (event) => {
@@ -369,16 +370,17 @@ export const Result: FC<{ query: string, onIsCommitedChange: any, onTextSelect: 
               </Accordion>
             </div>
             <div />
-            {buttonPosition && selectedText && (
-              <button
-                style={{ position: 'absolute', top: buttonPosition.top, left: buttonPosition.left }}
-                className="bg-gray-100 text-white p-2 rounded-2xl  border-2 border-stone-600"
-                onClick={handleAddText}
-              >
-                <Quote size={16} color="#000000" />
-              </button>
-            )}
+
           </div >
+          {buttonPosition && selectedText && (
+            <button
+              style={{ position: 'absolute', top: buttonPosition.top, left: buttonPosition.left }}
+              className="bg-gray-100 text-white p-2 rounded-2xl  border-2 border-stone-600"
+              onClick={handleAddText}
+            >
+              <Quote size={16} color="#000000" />
+            </button>
+          )}
         </div >
       )}
       <div ref={bottomRef} />
