@@ -94,9 +94,9 @@ export const Result: FC<{
 
   const handleAddText = () => {
     if (selectedText) {
-      onTextSelect(selectedText); // 将选中的文本传递给父组件
-      setSelectedText(null);
-      setButtonPosition(null);
+      onTextSelect(selectedText) // 将选中的文本传递给父组件
+      setSelectedText(null)
+      setButtonPosition(null)
     }
   }
 
@@ -126,7 +126,7 @@ export const Result: FC<{
   /* 请求数据 */
   /* 请求数据 */
   useEffect(() => {
-    const eventSource = new EventSource(`/api/proxy?query=${query}`);
+    const eventSource = new EventSource(`/api/proxy?query=${query}`)
     // const eventSource = new EventSource(
     //   `${process.env.NEXT_PUBLIC_API_URL}/workflow/query?keyword=${query}`,
     // )
@@ -525,18 +525,21 @@ export const Result: FC<{
               </Accordion>
             </div>
             <div />
-
-          </div >
+          </div>
           {buttonPosition && selectedText && (
             <button
-              style={{ position: 'absolute', top: buttonPosition.top, left: buttonPosition.left }}
-              className="bg-gray-100 text-white p-2 rounded-2xl  border-2 border-stone-600"
+              style={{
+                position: 'absolute',
+                top: buttonPosition.top,
+                left: buttonPosition.left,
+              }}
+              className="rounded-2xl border-2 border-stone-600 bg-gray-100 p-2 text-white"
               onClick={handleAddText}
             >
               <Quote size={16} color="#000000" />
             </button>
           )}
-        </div >
+        </div>
       )}
       <div ref={bottomRef} />
     </>
