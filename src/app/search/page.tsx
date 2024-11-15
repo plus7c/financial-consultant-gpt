@@ -11,7 +11,7 @@ import { useSelectedTextStore } from '@/lib/store'
 
 // 定义搜索页面组件
 
-function Search() {
+export default function SearchPage() {
   const searchParams = useSearchParams()
   const q = searchParams.get('query') || ''
   const [queryHistory, setQueryHistory] = useState([q])
@@ -127,11 +127,3 @@ function Search() {
   )
 }
 
-export default function SearchPage() {
-  return (
-    // You could have a loading skeleton as the `fallback` too
-    <Suspense>
-      <Search />
-    </Suspense>
-  )
-}
