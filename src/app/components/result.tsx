@@ -32,12 +32,12 @@ export const Result: FC<{
   onTextSelect: (selectedText: string) => void
 }> = ({ query, onIsCommitedChange, onTextSelect }) => {
   /* 本地mock测试 */
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [references, setReferences] = useState<referencesType[]>(mock);
-  // const [reasons, setReasons] = useState<string[]>(md);
-  const [isLoading, setIsLoading] = useState(true)
-  const [references, setReferences] = useState<referencesType[]>([])
-  const [reasons, setReasons] = useState<string[]>([])
+  const [isLoading, setIsLoading] = useState(false);
+  const [references, setReferences] = useState<referencesType[]>(mock);
+  const [reasons, setReasons] = useState<string[]>(md);
+  // const [isLoading, setIsLoading] = useState(true)
+  // const [references, setReferences] = useState<referencesType[]>([])
+  // const [reasons, setReasons] = useState<string[]>([])
   const [advices, setAdvices] = useState<string[]>([])
   const [selectedText, setSelectedText] = useState<string | null>(null)
   const [buttonPosition, setButtonPosition] = useState<{
@@ -53,6 +53,7 @@ export const Result: FC<{
 
   const frameRef = useRef<HTMLDivElement | null>(null)
   const bottomRef = useRef<HTMLDivElement | null>(null)
+  const textRef = useRef(null);
 
   const [scope, animate] = useAnimate()
 
@@ -77,7 +78,21 @@ export const Result: FC<{
   }, [])
 
   /* 处理文本引用的逻辑 */
-  const handleTextSelect = () => {
+  // const handleTextSelect = () => {
+  //   const selection = window.getSelection()
+  //   const selectedText = selection?.toString()
+  //   if (selectedText) {
+  //     const range = selection?.getRangeAt(0).getBoundingClientRect()
+  //     if (range) {
+  //       setSelectedText(selectedText)
+  //       setButtonPosition({
+  //         top: range.top + window.scrollY - 40, // 按钮显示在选中文本上方
+  //         left: range.left + window.scrollX,
+  //       })
+  //     }
+  //   }
+  // }
+  const handleTextSelection = () => {
     const selection = window.getSelection()
     const selectedText = selection?.toString()
     if (selectedText) {
@@ -90,7 +105,7 @@ export const Result: FC<{
         })
       }
     }
-  }
+  };
 
   const handleAddText = () => {
     if (selectedText) {
@@ -108,13 +123,14 @@ export const Result: FC<{
 
   useEffect(() => {
     /* 监听鼠标点击和释放 */
-    document.addEventListener('mouseup', handleTextSelect)
+    // document.addEventListener('mouseup', handleTextSelect)
     document.addEventListener('click', handleClickOutside)
     return () => {
-      document.removeEventListener('mouseup', handleTextSelect)
+      // document.removeEventListener('mouseup', handleTextSelect)
       document.removeEventListener('click', handleClickOutside)
     }
   }, [])
+
 
   /* 获取数据后，自动滚动页面 */
   useEffect(() => {
@@ -123,64 +139,63 @@ export const Result: FC<{
     }
   }, [reasons, advices, references, summary])
 
-  /* 请求数据 */
-  useEffect(() => {
-    const eventSource = new EventSource(`/api/proxy?query=${query}`);
-    // const eventSource = new EventSource(
-    //   `${process.env.NEXT_PUBLIC_API_URL}/workflow/query?keyword=${query}`,
-    // )
-    /* 本地 */
-    // const eventSource = new EventSource(`http://192.168.229.24:8080/api/v1/workflow/query?keyword=${query}`);
-    eventSource.onmessage = (event) => {
-      try {
-        const message = JSON.parse(event.data)
-        if (message.status === 'finish') {
-          onIsCommitedChange(true)
-          console.log('断开链接')
-          eventSource.close()
-        }
-        switch (message.type) {
-          case '0000': // 后端不走搜索的情况，没有block模板
-            setIsLoading(false)
-            setReasons((preReasons) => [...preReasons, message.data])
-            break
-          case '0001': // 来源引用
-            setIsLoading(false)
-            setReferences((preReferences) => [
-              ...preReferences,
-              ...message.data.reference_data,
-            ])
-            break
-          case '0010': // 分析推理
-            setIsLoading(false)
-            setReasons((preReasons) => [...preReasons, message.data])
-            break
-          case '0011': // 总结意见
-            setIsLoading(false)
-            setAdvices((preAdvices) => [...preAdvices, message.data])
-            break
-          case '0100':
-            const d = message.data
-            // parse解析嵌套对象
-            const s = {
-              origin: null,
-              analyse: JSON.parse(d.analyse),
-              propose: JSON.parse(d.propose),
-            }
-            setSummary(s) // 直接设置数据
-            break
-          default:
-            console.log('Unknown event type:', message.event)
-        }
-      } catch (error) {
-        console.error('Error parsing message data:', error)
-      }
-    }
-
-    return () => {
-      eventSource.close()
-    }
-  }, [query])
+  /* 请求数据
+  // useEffect(() => {
+  //   const eventSource = new EventSource(`/api/proxy?query=${query}`)
+  //   // const eventSource = new EventSource(
+  //   //   `${process.env.NEXT_PUBLIC_API_URL}/workflow/query?keyword=${query}`,
+  //   // )
+  //   /* 本地 */
+  //   // const eventSource = new EventSource(`http://192.168.229.24:8080/api/v1/workflow/query?keyword=${query}`);
+  //   eventSource.onmessage = (event) => {
+  //     try {
+  //       const message = JSON.parse(event.data)
+  //       if (message.status === 'finish') {
+  //         onIsCommitedChange(true)
+  //         console.log('断开链接')
+  //         eventSource.close()
+  //       }
+  //       switch (message.type) {
+  //         case '0000': // 后端不走搜索的情况，没有block模板
+  //           setIsLoading(false)
+  //           setReasons((preReasons) => [...preReasons, message.data])
+  //           break
+  //         case '0001': // 来源引用
+  //           setIsLoading(false)
+  //           setReferences((preReferences) => [
+  //             ...preReferences,
+  //             ...message.data.reference_data,
+  //           ])
+  //           break
+  //         case '0010': // 分析推理
+  //           setIsLoading(false)
+  //           setReasons((preReasons) => [...preReasons, message.data])
+  //           break
+  //         case '0011': // 总结意见
+  //           setIsLoading(false)
+  //           setAdvices((preAdvices) => [...preAdvices, message.data])
+  //           break
+  //         case '0100':
+  //           const d = message.data
+  //           // parse解析嵌套对象
+  //           const s = {
+  //             origin: null,
+  //             analyse: JSON.parse(d.analyse),
+  //             propose: JSON.parse(d.propose),
+  //           }
+  //           setSummary(s) // 直接设置数据
+  //           break
+  //         default:
+  //           console.log('Unknown event type:', message.event)
+  //       }
+  //     } catch (error) {
+  //       console.error('Error parsing message data:', error)
+  //     }
+  //   }
+  //   return () => {
+  //     eventSource.close()
+  //   }
+  // }, [query])
 
   return (
     <>
@@ -247,7 +262,7 @@ export const Result: FC<{
                           {reference.title}
                         </div>
                         <div className="block w-full max-w-36 overflow-hidden text-ellipsis whitespace-nowrap text-xs text-gray-600 hover:text-blue-500">
-                          {reference.url}
+                          {new URL(reference.url).hostname}
                         </div>
                       </a>
                       <div className="pointer-events-none absolute left-0 top-full z-10 mt-2 w-96 scale-95 transform overflow-visible rounded-lg border bg-white p-4 opacity-0 shadow-lg transition-all duration-300 ease-in-out group-hover:pointer-events-auto group-hover:scale-100 group-hover:opacity-100">
@@ -272,7 +287,7 @@ export const Result: FC<{
                               {reference.title}
                             </div>
                             <div className="block w-full max-w-36 overflow-hidden text-ellipsis whitespace-nowrap text-xs text-gray-600">
-                              {reference.url}
+                              {new URL(reference.url).hostname}
                             </div>
                             <Separator></Separator>
                           </div>
@@ -308,7 +323,7 @@ export const Result: FC<{
                                   <b>简介</b>：{snippet}
                                 </div>
                                 <div className="block overflow-hidden text-ellipsis whitespace-nowrap text-xs text-gray-600 hover:text-blue-200">
-                                  {url}
+                                  {new URL(url).hostname}
                                 </div>
                               </a>
                             </div>
@@ -325,11 +340,31 @@ export const Result: FC<{
               {reasons.map((reason, index) => (
                 <div
                   key={index}
+                  ref={textRef}
+                  onMouseUp={handleTextSelection}
                   className="animation-delay-0 flex-1 animate-fadeInUp"
                 >
                   <ReactMarkdown
                     remarkPlugins={[remarkGfm, remarkBreaks, remarkParse]}
                     components={{
+                      table: ({ node, ...props }) => (
+                        <table className="border-collapse border border-gray-300" {...props} />
+                      ),
+                      thead: ({ node, ...props }) => (
+                        <thead className="bg-gray-200" {...props} />
+                      ),
+                      tbody: ({ node, ...props }) => (
+                        <tbody {...props} />
+                      ),
+                      tr: ({ node, ...props }) => (
+                        <tr className="border-b border-gray-300" {...props} />
+                      ),
+                      th: ({ node, ...props }) => (
+                        <th className="p-2 text-left font-semibold" {...props} />
+                      ),
+                      td: ({ node, ...props }) => (
+                        <td className="p-2" {...props} />
+                      ),
                       p: ({ node, ...props }) => (
                         <span className="ml-5" {...props} />
                       ),
@@ -406,6 +441,9 @@ export const Result: FC<{
                             </div>
                           </div>
                         </span>
+                      ),
+                      img: ({ node, ...props }) => (
+                        <img className="mx-auto my-5" {...props} />
                       ),
                     }}
                   >
@@ -524,18 +562,23 @@ export const Result: FC<{
               </Accordion>
             </div>
             <div />
-
-          </div >
+          </div>
           {buttonPosition && selectedText && (
             <button
-              style={{ position: 'absolute', top: buttonPosition.top, left: buttonPosition.left }}
-              className="bg-gray-100 text-white p-2 rounded-2xl  border-2 border-stone-600"
+              style={{
+                position: 'absolute',
+                top: buttonPosition.top,
+                left: buttonPosition.left,
+              }}
+              className="rounded-2xl border-2 border-stone-600 bg-gray-100 p-2 text-white"
+
               onClick={handleAddText}
             >
               <Quote size={16} color="#000000" />
             </button>
           )}
-        </div >
+        </div>
+
       )}
       <div ref={bottomRef} />
     </>
