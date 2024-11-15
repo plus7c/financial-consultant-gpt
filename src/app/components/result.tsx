@@ -109,9 +109,9 @@ export const Result: FC<{
 
   const handleAddText = () => {
     if (selectedText) {
-      onTextSelect(selectedText) // 将选中的文本传递给父组件
-      setSelectedText(null)
-      setButtonPosition(null)
+      onTextSelect(selectedText); // 将选中的文本传递给父组件
+      setSelectedText(null);
+      setButtonPosition(null);
     }
   }
 
@@ -139,7 +139,7 @@ export const Result: FC<{
     }
   }, [reasons, advices, references, summary])
 
-  /* 请求数据 */
+  /* 请求数据
   // useEffect(() => {
   //   const eventSource = new EventSource(`/api/proxy?query=${query}`)
   //   // const eventSource = new EventSource(
@@ -192,7 +192,6 @@ export const Result: FC<{
   //       console.error('Error parsing message data:', error)
   //     }
   //   }
-
   //   return () => {
   //     eventSource.close()
   //   }
@@ -572,12 +571,14 @@ export const Result: FC<{
                 left: buttonPosition.left,
               }}
               className="rounded-2xl border-2 border-stone-600 bg-gray-100 p-2 text-white"
+
               onClick={handleAddText}
             >
               <Quote size={16} color="#000000" />
             </button>
           )}
         </div>
+
       )}
       <div ref={bottomRef} />
     </>
